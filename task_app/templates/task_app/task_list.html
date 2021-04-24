@@ -1,0 +1,60 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Task List</h1>
+
+  <table class="sortable">
+    <tr>
+      <th>"  Username  "<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=username&sort_direction=asc">▲</a>
+      <a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=username&sort_direction=desc">▼</a></th>
+      <th>"  Email  "<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=email&sort_direction=asc">▲</a>
+      <a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=email&sort_direction=desc">▼</a></th>
+      <th>"  Text  "</th>
+      <th>"  Status  "<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=status&sort_direction=asc">▲</a>
+      <a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=status&sort_direction=desc">▼</a></th>
+      <th>"  Changed by admin  "</th>
+    </tr>
+    {% for task in task_list %}
+      <tr>
+        <td>
+          {{ task.username }}
+        </td>
+        <td>
+          {{ task.email }}
+        </td>
+        <td>
+          {{ task.text }}
+        </td>
+        <td>
+          {{ task.status }}
+        </td>
+        <td>
+        {% if task.changed_by_admin %}
+          {{ task.changed_by_admin }}
+        {% endif %}
+        </td>
+        {% if user.is_authenticated %}
+        <td>
+          <a href="{% url 'task_update' task.id %}">Edit</a>
+        </td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+  {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/?page={{ page_obj.previous_page_number }}&sort_field={{ sort_field }}&sort_direction={{ sort_direction }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/?page={{ page_obj.next_page_number }}&sort_field={{ sort_field }}&sort_direction={{ sort_direction }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+{% endblock %}
