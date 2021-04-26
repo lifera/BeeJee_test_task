@@ -1,18 +1,32 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+th, td {
+  padding: 10px;
+}
+</style>
   <h1>Task List</h1>
-
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
   <table class="sortable">
     <tr>
-      <th>"  Username  "<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=username&sort_direction=asc">▲</a>
+      <th>Username<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=username&sort_direction=asc">▲</a>
       <a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=username&sort_direction=desc">▼</a></th>
-      <th>"  Email  "<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=email&sort_direction=asc">▲</a>
+      <th>Email<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=email&sort_direction=asc">▲</a>
       <a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=email&sort_direction=desc">▼</a></th>
-      <th>"  Text  "</th>
-      <th>"  Status  "<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=status&sort_direction=asc">▲</a>
+      <th>Text</th>
+      <th>Status<a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=status&sort_direction=asc">▲</a>
       <a class="glyphicon" href="?page={{ page_obj.number }}&sort_field=status&sort_direction=desc">▼</a></th>
-      <th>"  Changed by admin  "</th>
+      <th>Changed by admin</th>
     </tr>
     {% for task in task_list %}
       <tr>
