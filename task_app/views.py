@@ -29,7 +29,7 @@ class TaskListView(ListView):
             return [sort_field]
 
 
-class TaskCreate(CreateView, SuccessMessageMixin):
+class TaskCreate(SuccessMessageMixin, CreateView):
     model = Task
     fields = ['username', 'email', 'text']
     success_message = 'Task successfully created!'
